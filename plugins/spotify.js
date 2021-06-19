@@ -4,7 +4,7 @@ export const spotify = new SpotifyWebApi();
 export const authEndpoint = "https://accounts.spotify.com/authorize";
 export const apiEndpoint = "https://accounts.spotify.com/api";
 // const redirectUri = "https://spotifyinterface.netlify.app/";
-const redirectUri = "http://localhost:3000";
+const redirectUri = "http://localhost:3000/complete";
 const clientId = process.env.SPOTIFY_CLIENT;
 const clientSecret = process.env.SPOTIFY_SECRET;
 const scopes = [
@@ -33,27 +33,19 @@ export const getTokenFromUrl = () => {
 };
 
 export const setToken = async context => {
-  console.log(":)");
   if (typeof window === "undefined") return;
   const hash = getTokenFromUrl();
-  console.log(":D");
-  console.log(hash);
-  const { token, user } = context.state;
+  const { token } = context.$store.state;
   window.location.hash = "";
   const _token = hash?.code;
-  const _type = hash?.token_type;
-  if (_token) {
-    context.dispatch("setToken", _token);
-    context.dispatch("setType", _type);
-  }
-  spotify.setAccessToken(_token || token);
+
   if (_token || token) {
     const activeToken = _token || token;
-    return await convertToken(activeToken);
+    return await convertToken(activeToken, context);
   }
 };
 
-export const convertToken = async token => {
+export const convertToken = async (token, context) => {
   const result = await fetch(apiEndpoint + "/token", {
     method: "POST",
     headers: {
@@ -63,6 +55,13 @@ export const convertToken = async token => {
     body: `grant_type=authorization_code&code=${token}&redirect_uri=${redirectUri}`
   });
   const data = await result.json();
+
+  context.$store.dispatch("setToken", {
+    token: data.access_token,
+    context,
+    expires_in: data.expires_in
+  });
+
   return data;
 };
 

@@ -12,9 +12,6 @@ export default {
     return {
       loginUrl
     };
-  },
-  created() {
-    setToken(this.$store);
   }
 };
 </script>

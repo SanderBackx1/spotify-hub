@@ -8,7 +8,8 @@ export const state = () => ({
   refresh_token: "",
   openRooms: [],
   invitedRooms: [],
-  myRoom: ""
+  myRoom: "",
+  initialLoadingDone: false
 });
 export const getters = {
   getUser: state => _ => {
@@ -29,6 +30,9 @@ export const getters = {
   },
   getMyRoomId: state => _ => {
     return state.myRoom;
+  },
+  getLoadingDone: state => _ => {
+    return state.initialLoadingDone;
   }
 };
 export const actions = {
@@ -39,12 +43,15 @@ export const actions = {
     spotify.setAccessToken(token);
     context.$cookies.set("spotify_access", token, `${expires_in}s`);
     commit("SET_TOKEN", token);
+    dispatch("initStartup", context);
   },
   setRefresh: ({ commit, dispatch }, { token }) => {
     this.$cookies.set("spotify_refresh", token);
     commit("SET_REFRESH", token);
   },
-
+  setInitialLoadingDone: ({ commit }) => {
+    commit("LOADING_DONE");
+  },
   retrieveAndSetUser: async ({ commit }) => {
     try {
       const user = await spotify.getMe();
@@ -61,9 +68,7 @@ export const actions = {
     const refresh_token = context.$cookies.get("spotify_refresh");
     // const access_token = null;
     const access_token = context.$cookies.get("spotify_access");
-
     if (access_token) {
-      console.log("active access_token");
       spotify.setAccessToken(access_token);
     } else if (refresh_token) {
       const data = await refreshToken(refresh_token);
@@ -73,7 +78,10 @@ export const actions = {
         expires_in: data.expires_in
       });
       spotify.setAccessToken(data.access_token);
+    } else {
+      dispatch("setInitialLoadingDone");
     }
+
     const user = await spotify.getMe();
     dispatch("setUser", user);
     const docRef = db.collection("users").doc(user.id);
@@ -93,7 +101,7 @@ export const actions = {
     });
     return user;
   },
-  roomsInit: async ({ commit, state }) => {
+  roomsInit: async ({ commit, dispatch, state }) => {
     const collectionRef = db.collection("rooms");
 
     if (state.user && state.user.id) {
@@ -126,6 +134,7 @@ export const actions = {
     });
 
     commit("SET_OPEN_ROOMS", rooms);
+    dispatch("setInitialLoadingDone");
     return rooms;
   },
   initStartup: async ({ dispatch }, context) => {
@@ -174,5 +183,8 @@ export const mutations = {
   },
   SET_MY_ROOM: (state, roomId) => {
     state.myRoom = roomId;
+  },
+  LOADING_DONE: state => {
+    state.initialLoadingDone = true;
   }
 };
