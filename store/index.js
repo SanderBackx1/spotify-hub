@@ -7,7 +7,8 @@ export const state = () => ({
   token: process.server ? "" : localStorage.getItem("userDetails") || "",
   refresh_token: "",
   openRooms: [],
-  invitedRooms: []
+  invitedRooms: [],
+  myRoom: ""
 });
 export const getters = {
   getUser: state => _ => {
@@ -22,6 +23,9 @@ export const getters = {
   },
   getInvitedRooms: state => _ => {
     return state.invitedRooms;
+  },
+  hasMyRoom: state => _ => {
+    return !!state.myRoom;
   }
 };
 export const actions = {
@@ -69,11 +73,12 @@ export const actions = {
     }
     const user = await spotify.getMe();
     dispatch("setUser", user);
-
     const docRef = db.collection("users").doc(user.id);
     docRef.get().then(doc => {
       if (doc.exists) {
         console.log("exists");
+        console.log(doc.data().my_room);
+        if (doc.data().my_room) dispatch("setMyRoom", doc.data().my_room);
         // docRef.update({
         //   ...user
         // });
@@ -127,6 +132,27 @@ export const actions = {
     dispatch("userInit", context).finally(_ => {
       dispatch("roomsInit");
     });
+  },
+  setMyRoom: async ({ commit, state }, roomId) => {
+    db.collection("users")
+      .doc(state.user.id)
+      .update({
+        my_room: roomId
+      });
+    commit("SET_MY_ROOM", roomId);
+  },
+  createRoom: async ({ dispatch, state }, room) => {
+    const collectionRef = db.collection("rooms");
+    const newRoom = {
+      ...room,
+      heat: 0,
+      connected: 0,
+      host: state.user.id,
+      now_playing: "",
+      now_playing_img: ""
+    };
+    const docRef = await collectionRef.add(newRoom);
+    dispatch("setMyRoom", docRef.id);
   }
 };
 export const mutations = {
@@ -145,5 +171,8 @@ export const mutations = {
   },
   SET_INVITED_ROOMS: (state, rooms) => {
     state.invitedRooms = rooms;
+  },
+  SET_MY_ROOM: (state, roomId) => {
+    state.myRoom = roomId;
   }
 };

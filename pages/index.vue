@@ -1,13 +1,13 @@
 <template>
   <div class="container ">
-    <div class="top-wrapper flex justify-start items-center ">
+    <div class="top-wrapper flex justify-start items-center flex-wrap">
       <RoomDisplay
         :title="`You're invited to..`"
         :rooms="invitedRooms"
-        class="py-8 w-1/2"
+        class="py-8 xl:w-1/2 lg:w-screen"
       />
-      <div class="wrapper w-1/2">
-        <h1>Create wip</h1>
+      <div class="py-8 wrapper xl:w-1/2 lg:w-screen">
+        <CreateNewDisplay v-if="!hasRoom" />
       </div>
     </div>
     <RoomDisplay :title="`Open rooms`" :rooms="openRooms" class="py-8" />
@@ -15,12 +15,10 @@
 </template>
 
 <script>
-import { loginUrl } from "../plugins/spotify";
 export default {
   data() {
     return {
-      users: [],
-      loginUrl
+      users: []
     };
   },
   computed: {
@@ -35,6 +33,9 @@ export default {
     },
     invitedRooms() {
       return this.$store.getters.getInvitedRooms();
+    },
+    hasRoom() {
+      return this.$store.getters.hasMyRoom();
     }
   },
   async mounted() {

@@ -1,5 +1,5 @@
 <template>
-  <div class="card bg-blackLight text-white w-128 rounded-lg shadow-lg">
+  <div class="card bg-blackLight text-white w-128 rounded-lg shadow-lg h-80">
     <div class="card-content-wrapper py-4 px-8">
       <div class="card-title flex justify-between items-center mb-4">
         <h1 class="title text-white font-bold text-2xl ">
