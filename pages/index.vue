@@ -1,28 +1,26 @@
 <template>
-  <div class="container">
-    <div v-if="!$fetchState.pending">
-      <ul>
-        <li v-for="user in users.results" :key="user.login.uuid">
-          {{ user.name.first }} {{ user.name.last }}
-        </li>
-      </ul>
-    </div>
-    <div v-else>
-      Loading...
-    </div>
-  </div>
+  <div class="container"></div>
 </template>
 
 <script>
+import { loginUrl } from "../plugins/spotify";
 export default {
   data() {
     return {
-      users: []
+      users: [],
+      loginUrl
     };
   },
-  async fetch() {
-    const response = await fetch("https://randomuser.me/api/?results=5");
-    this.users = await response.json();
+  computed: {
+    token() {
+      return this.$store.getters.getToken();
+    },
+    user() {
+      return this.$store.getters.getUser();
+    }
+  },
+  async mounted() {
+    this.$store.dispatch("userInit", this);
   }
 };
 </script>

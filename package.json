@@ -10,11 +10,16 @@
   },
   "dependencies": {
     "@nuxtjs/firebase": "^7.6.1",
+    "axios": "^0.21.1",
     "core-js": "^3.9.1",
     "firebase": "^8.6.8",
     "isomorphic-fetch": "^3.0.0",
     "nuxt": "^2.15.3",
+    "spotify-web-api-js": "^1.5.1",
+    "vue-cookies": "^1.7.4",
     "vuexfire": "^3.2.5"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "@nuxtjs/dotenv": "^1.4.1"
+  }
 }
