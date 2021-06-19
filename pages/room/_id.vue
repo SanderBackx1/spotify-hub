@@ -2,7 +2,7 @@
   <div class="wrapper">
     <div v-if="!$fetchState.pending">
       <div v-if="user.id === room.host">
-        IM HOST :)
+        <HostDisplay :name="room.name" />
       </div>
       <div v-else>
         not host :(
