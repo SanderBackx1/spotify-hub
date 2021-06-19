@@ -12,7 +12,11 @@
         </div>
       </div>
       <div class="card-info flex justify-start">
-        <img :src="room.now_playing_img" class="w-1/3  shadow-lg" alt="" />
+        <img
+          :src="room.now_playing_img"
+          class="w-1/3  shadow-lg rounded-2xl"
+          alt=""
+        />
         <div class="card-info-content px-8 w-2/3 flex justify-between flex-col">
           <div class="card-text flex justify-between">
             <div class="host-playing-wrapper">
