@@ -19,13 +19,12 @@ module.exports = {
     colors: {
       white: colors.white,
       black: colors.black,
-      gray: colors.coolGray,
+      gray: colors.gray,
+      blackLight: { DEFAULT: `#333333` },
       blue: colors.lightBlue,
       red: colors.rose,
       pink: colors.fuchsia,
-      green: {
-        DEFAUT: "#1DB954"
-      },
+      green: { DEFAULT: `#1DB954` },
       gradient1: { DEFAULT: `#5B5773` }
     },
     fontFamily: {
