@@ -1,7 +1,6 @@
 <template>
   <div class="container">
-    {{ openRooms }}
-    {{ invitedRooms }}
+    <RoomDisplay :title="`You're invited to..`" :rooms="invitedRooms" />
   </div>
 </template>
 

@@ -1,7 +1,11 @@
 <template>
-  <div>
+  <div class="bg-gradient-to-br from-gradient1 to-black min-h-screen">
     <Nav />
-    <Nuxt />
+    <div class="flex justify-center">
+      <div class="w-3/5 py-16">
+        <Nuxt />
+      </div>
+    </div>
   </div>
 </template>
 
