@@ -103,7 +103,7 @@ export const actions = {
         };
         invited.push(room);
       });
-      commit("SET_INVITED_ROOMS", rooms);
+      commit("SET_INVITED_ROOMS", invited);
     }
 
     const querySnapshot = await collectionRef
