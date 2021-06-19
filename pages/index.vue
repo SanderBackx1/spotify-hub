@@ -1,5 +1,8 @@
 <template>
-  <div class="container"></div>
+  <div class="container">
+    {{ openRooms }}
+    {{ invitedRooms }}
+  </div>
 </template>
 
 <script>
@@ -17,10 +20,18 @@ export default {
     },
     user() {
       return this.$store.getters.getUser();
+    },
+    openRooms() {
+      return this.$store.getters.getOpenRooms();
+    },
+    invitedRooms() {
+      return this.$store.getters.getInvitedRooms();
     }
   },
   async mounted() {
-    this.$store.dispatch("userInit", this);
+    this.$store.dispatch("initStartup", this);
+    // await this.$store.dispatch("userInit", this);
+    // this.$store.dispatch("roomsInit");
   }
 };
 </script>

@@ -5,7 +5,9 @@ export const state = () => ({
   user: {},
   window: typeof window,
   token: process.server ? "" : localStorage.getItem("userDetails") || "",
-  refresh_token: ""
+  refresh_token: "",
+  openRooms: [],
+  invitedRooms: []
 });
 export const getters = {
   getUser: state => _ => {
@@ -13,6 +15,13 @@ export const getters = {
   },
   getToken: state => _ => {
     return state.token;
+  },
+
+  getOpenRooms: state => _ => {
+    return state.openRooms;
+  },
+  getInvitedRooms: state => _ => {
+    return state.invitedRooms;
   }
 };
 export const actions = {
@@ -76,6 +85,48 @@ export const actions = {
           });
       }
     });
+    console.log("showing user");
+    return user;
+  },
+  roomsInit: async ({ commit, state }) => {
+    const collectionRef = db.collection("rooms");
+
+    if (state.user && state.user.id) {
+      const invited = [];
+      const invitedSnapshot = await collectionRef
+        .where(`invites.${state.user.id}`, ">=", "")
+        .get();
+      invitedSnapshot.forEach(doc => {
+        const room = {
+          id: doc.id,
+          ...doc.data()
+        };
+        invited.push(room);
+      });
+      commit("SET_INVITED_ROOMS", rooms);
+    }
+
+    const querySnapshot = await collectionRef
+      .where("type", "==", "open")
+      .orderBy("heat")
+      .get();
+
+    const rooms = [];
+    querySnapshot.forEach(doc => {
+      const room = {
+        id: doc.id,
+        ...doc.data()
+      };
+      rooms.push(room);
+    });
+
+    commit("SET_OPEN_ROOMS", rooms);
+    return rooms;
+  },
+  initStartup: async ({ dispatch }, context) => {
+    dispatch("userInit", context).finally(_ => {
+      dispatch("roomsInit");
+    });
   }
 };
 export const mutations = {
@@ -88,5 +139,11 @@ export const mutations = {
   },
   SET_REFRESH: (state, token) => {
     state.refresh_token = token;
+  },
+  SET_OPEN_ROOMS: (state, rooms) => {
+    state.openRooms = rooms;
+  },
+  SET_INVITED_ROOMS: (state, rooms) => {
+    state.invitedRooms = rooms;
   }
 };
