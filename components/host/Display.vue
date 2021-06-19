@@ -9,7 +9,7 @@
       <div
         class="main-section flex xl:justify-between lg:justify-center items-center my-8 mx-16 flex-wrap"
       >
-        <div class="playlistsongs bg-red-400 xl:w-3/4 lg:w-3/4">
+        <div class="playlistsongs xl:w-3/4 lg:w-3/4">
           <HostPlaylistCard />
         </div>
         <div class="playlists bg-gray-400 xl:w-1/4 lg:w-3/4">

@@ -9,7 +9,8 @@ export const state = () => ({
   openRooms: [],
   invitedRooms: [],
   myRoom: "",
-  initialLoadingDone: false
+  initialLoadingDone: false,
+  currentPlayback: {}
 });
 export const getters = {
   getUser: state => _ => {
@@ -33,6 +34,9 @@ export const getters = {
   },
   getLoadingDone: state => _ => {
     return state.initialLoadingDone;
+  },
+  getCurrentPlayback: state => _ => {
+    return state.currentPlayback;
   }
 };
 export const actions = {
@@ -162,6 +166,9 @@ export const actions = {
     };
     const docRef = await collectionRef.add(newRoom);
     dispatch("setMyRoom", docRef.id);
+  },
+  setCurrentPlayBackState: async ({ commit }, playback) => {
+    commit("SET_PLAYBACKSTATE", playback);
   }
 };
 export const mutations = {
@@ -186,5 +193,8 @@ export const mutations = {
   },
   LOADING_DONE: state => {
     state.initialLoadingDone = true;
+  },
+  SET_PLAYBACKSTATE: (state, playback) => {
+    state.currentPlayback = playback;
   }
 };
