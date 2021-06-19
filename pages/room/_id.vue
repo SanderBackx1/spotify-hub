@@ -15,6 +15,8 @@
 import { db } from "@/plugins/firebase";
 
 export default {
+  layout: "wide",
+
   data() {
     return {
       room: undefined
