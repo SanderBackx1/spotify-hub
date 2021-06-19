@@ -1,5 +1,7 @@
 <template>
-  <div class="bg-gradient-to-br from-gradient1 to-black min-h-screen">
+  <div
+    class="bg-gradient-to-br from-gradient1 to-black min-h-screen overflow-x-hidden"
+  >
     <Nav />
     <div class="flex justify-center">
       <div class="w-3/5 py-16">

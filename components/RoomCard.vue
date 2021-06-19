@@ -14,10 +14,10 @@
       <div class="card-info flex justify-start">
         <img
           :src="room.now_playing_img"
-          class="w-1/3  shadow-lg rounded-2xl"
+          class="w-1/2  shadow-lg rounded-2xl"
           alt=""
         />
-        <div class="card-info-content px-8 w-2/3 flex justify-between flex-col">
+        <div class="card-info-content ml-8 w-1/2 flex justify-between flex-col">
           <div class="card-text flex justify-between">
             <div class="host-playing-wrapper">
               <div class="playing">
@@ -37,9 +37,9 @@
               <span class="text-sm p-2">{{ tag }}</span>
             </div>
           </div>
-          <div class="button-wrapper flex justify-center items-center ">
+          <div class="button-wrapper flex justify-start items-center ">
             <a
-              class="button flex justify-center items-center bg-green w-2/4 rounded-lg shadow-lg"
+              class="button cursor-pointer flex justify-center items-center bg-green w-1/2 rounded-lg shadow-lg"
             >
               Join
             </a>

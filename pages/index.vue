@@ -1,10 +1,16 @@
 <template>
-  <div class="container">
-    <RoomDisplay
-      :title="`You're invited to..`"
-      :rooms="invitedRooms"
-      class="py-16 w-1/2"
-    />
+  <div class="container ">
+    <div class="top-wrapper flex justify-start items-center ">
+      <RoomDisplay
+        :title="`You're invited to..`"
+        :rooms="invitedRooms"
+        class="py-8 w-1/2"
+      />
+      <div class="wrapper w-1/2">
+        <h1>Create wip</h1>
+      </div>
+    </div>
+    <RoomDisplay :title="`Open rooms`" :rooms="openRooms" class="py-8" />
   </div>
 </template>
 
