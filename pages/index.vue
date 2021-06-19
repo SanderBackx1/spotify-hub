@@ -1,6 +1,10 @@
 <template>
   <div class="container">
-    <RoomDisplay :title="`You're invited to..`" :rooms="invitedRooms" />
+    <RoomDisplay
+      :title="`You're invited to..`"
+      :rooms="invitedRooms"
+      class="py-16 w-1/2"
+    />
   </div>
 </template>
 

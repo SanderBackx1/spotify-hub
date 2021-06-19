@@ -1,8 +1,8 @@
 <template>
-  <div class="py-16">
-    <h3 class="text-5xl text-white font-bold  ">{{ title }}</h3>
+  <div>
+    <h3 class="text-5xl text-white font-bold mb-8 ">{{ title }}</h3>
     <div>
-      cards
+      <RoomCard v-for="room in rooms" :key="room.id" :room="room" />
     </div>
   </div>
 </template>
