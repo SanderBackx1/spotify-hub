@@ -24,6 +24,11 @@ export default {
     user() {
       return this.$store.getters.getUser();
     }
+  },
+  async mounted() {
+    this.$store.dispatch("initStartup", this);
+    // await this.$store.dispatch("userInit", this);
+    // this.$store.dispatch("roomsInit");
   }
 };
 </script>

@@ -38,11 +38,12 @@
             </div>
           </div>
           <div class="button-wrapper flex justify-start items-center ">
-            <a
+            <NuxtLink
+              :to="`/room/${room.id}`"
               class="button cursor-pointer flex justify-center items-center bg-green w-1/2 rounded-lg shadow-lg"
             >
               Join
-            </a>
+            </NuxtLink>
           </div>
         </div>
       </div>

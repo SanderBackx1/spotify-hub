@@ -26,6 +26,9 @@ export const getters = {
   },
   hasMyRoom: state => _ => {
     return !!state.myRoom;
+  },
+  getMyRoomId: state => _ => {
+    return state.myRoom;
   }
 };
 export const actions = {
@@ -76,8 +79,6 @@ export const actions = {
     const docRef = db.collection("users").doc(user.id);
     docRef.get().then(doc => {
       if (doc.exists) {
-        console.log("exists");
-        console.log(doc.data().my_room);
         if (doc.data().my_room) dispatch("setMyRoom", doc.data().my_room);
         // docRef.update({
         //   ...user
@@ -90,7 +91,6 @@ export const actions = {
           });
       }
     });
-    console.log("showing user");
     return user;
   },
   roomsInit: async ({ commit, state }) => {
