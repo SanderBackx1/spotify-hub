@@ -55,7 +55,7 @@ export const convertToken = async (token, context) => {
     body: `grant_type=authorization_code&code=${token}&redirect_uri=${redirectUri}`
   });
   const data = await result.json();
-
+  context.$cookies.set("spotify_refresh", data.refresh_token, `10d`);
   context.$store.dispatch("setToken", {
     token: data.access_token,
     context,
