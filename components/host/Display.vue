@@ -21,7 +21,9 @@
       </div>
     </div>
     <div class="chat-wrapper absolute h-screen right-0 top-0 xl:w-80 lg:w-80">
-      <div class="chat h-full w-full  bg-blue-200">CHAT</div>
+      <div class="chat h-full w-full  bg-blue-200">
+        <ChatDisplay />
+      </div>
     </div>
   </div>
 </template>
