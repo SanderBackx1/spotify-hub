@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper h-full flex flex-col bg-blackLight text-white shadow-lg">
-    <div class="top-wrapper h-20 flex items-center justify-center">
+    <div class="top-wrapper h-20 flex items-center justify-center shadow-md">
       <h3>Chatroom</h3>
     </div>
     <div class="messages-wrapper p-4">
