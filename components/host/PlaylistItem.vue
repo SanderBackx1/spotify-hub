@@ -1,6 +1,10 @@
 <template>
   <div class="">
-    <img class="rounded-lg mr-4" :src="track.album.images[2].url" alt="" />
+    <img
+      class="rounded-lg mr-4 w-10 h-10"
+      :src="track.album.images[2].url"
+      alt=""
+    />
     <div class="artist-title">
       <p class="mr-4 text-sm font-thin">
         {{ track.artists.map(artist => artist.name).join(", ") }}
