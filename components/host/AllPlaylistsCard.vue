@@ -12,6 +12,7 @@
         </div>
       </div>
       <!-- Place List -->
+      <HostPlaylistList />
     </div>
   </div>
 </template>
