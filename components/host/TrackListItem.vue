@@ -1,5 +1,5 @@
 <template>
-  <div class="">
+  <div>
     <img
       class="rounded-lg mr-4 w-10 h-10"
       :src="track.album.images[2].url"
