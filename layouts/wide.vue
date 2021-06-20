@@ -2,7 +2,7 @@
   <div
     class="bg-gradient-to-br from-gradient1 to-black min-h-screen overflow-x-hidden"
   >
-    <Nav />
+    <Nav class="z-10" />
     <DeviceVolume class="fixed z-50 bottom-0 left-0" />
     <Nuxt v-if="loadingDone" />
   </div>

@@ -1,7 +1,14 @@
 <template>
-  <div class="wrapper">
-    <ChatMessage v-for="item in chat" :key="item.id" :item="item" />
-    <ChatInput />
+  <div class="wrapper h-full flex flex-col bg-blackLight text-white">
+    <div class="top-wrapper h-20 flex items-center justify-center">
+      <h3>Chatroom</h3>
+    </div>
+    <div class="messages-wrapper p-4">
+      <ChatMessage v-for="item in chat" :key="item.id" :item="item" />
+    </div>
+    <div class="mt-auto">
+      <ChatInput />
+    </div>
   </div>
 </template>
 
