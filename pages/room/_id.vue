@@ -22,6 +22,9 @@ export default {
       room: undefined
     };
   },
+  mounted() {
+    this.$store.dispatch("setActiveRoom", this.$route.params.id);
+  },
   computed: {
     user() {
       return this.$store.getters.getUser();

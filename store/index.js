@@ -14,6 +14,7 @@ export const state = () => ({
   currentPlaylist: "",
   selectedPlaylist: "",
   devices: [],
+  activeRoom: "",
   selectedDevice: undefined
 });
 export const getters = {
@@ -53,6 +54,13 @@ export const getters = {
   },
   getSelectedDevice: state => _ => {
     return state.selectedDevice;
+  },
+  getActiveRoomId: state => _ => {
+    return state.activeRoom;
+  },
+  getActiveRoom: state => _ => {
+    const allrooms = [...state.openRooms, ...state.invitedRooms];
+    return allrooms.find(room => room.id == state.activeRoom);
   }
 };
 export const actions = {
@@ -63,7 +71,7 @@ export const actions = {
     spotify.setAccessToken(token);
     context.$cookies.set("spotify_access", token, `${expires_in}s`);
     commit("SET_TOKEN", token);
-    dispatch("initStartup", context);
+    // dispatch("initStartup", context);
   },
   setRefresh: ({ commit, dispatch }, { token }) => {
     this.$cookies.set("spotify_refresh", token);
@@ -88,6 +96,7 @@ export const actions = {
     const access_token = context.$cookies.get("spotify_access");
     if (access_token) {
       spotify.setAccessToken(access_token);
+      commit("SET_TOKEN", access_token);
     } else if (refresh_token) {
       const data = await refreshToken(refresh_token);
       dispatch("setToken", {
@@ -99,7 +108,6 @@ export const actions = {
     } else {
       dispatch("setInitialLoadingDone");
     }
-
     const user = await spotify.getMe();
     dispatch("setUser", user);
     const docRef = db.collection("users").doc(user.id);
@@ -189,7 +197,7 @@ export const actions = {
     if (!state.selectedDevice && playback.device) {
       commit("SET_SELECTED_DEVICE", playback.device);
     }
-    if (state.myRoom) {
+    if (state.myRoom && state.activeRoom == state.myRoom) {
       dispatch("updateMyRoom", playback);
     }
     commit("SET_PLAYBACKSTATE", playback);
@@ -221,6 +229,9 @@ export const actions = {
       progress_ms: playback.progress_ms,
       item: playback.item
     });
+  },
+  setActiveRoom: ({ commit }, room) => {
+    commit("SET_ACTIVE_ROOM", room);
   }
 };
 export const mutations = {
@@ -260,5 +271,8 @@ export const mutations = {
   },
   SET_SELECTED_DEVICE: (state, device) => {
     state.selectedDevice = device;
+  },
+  SET_ACTIVE_ROOM: (state, room) => {
+    state.activeRoom = room;
   }
 };

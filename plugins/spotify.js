@@ -79,7 +79,6 @@ export const refreshToken = async refresh_token => {
       body: `grant_type=refresh_token&refresh_token=${refresh_token}`
     });
     const data = await result.json();
-    console.log(data);
     return data;
   } catch (err) {
     return err;
@@ -96,7 +95,13 @@ export const fetchAndUpdatePlaybackState = async context => {
     console.log(err);
     if (err.status == 401 || err.status == 403) {
       const refresh = context.$cookies.get("spotify_refresh");
-      refreshToken(refresh);
+      refreshToken(refresh).then(data => {
+        context.$store.dispatch("setToken", {
+          token: data.access_token,
+          context,
+          expires_in: data.expires_in
+        });
+      });
     }
   }
 };

@@ -40,6 +40,21 @@
         </div>
       </div>
     </div>
+    <div class="room-wrapper text-white flex justify-center items-center px-8">
+      <div v-if="activeRoom">
+        <h3>{{ activeRoom.name }}</h3>
+      </div>
+    </div>
+    <div class="home-wrapper text-white flex justify-center items-center px-8">
+      <div class="button-wrapper flex justify-start items-center ">
+        <NuxtLink
+          :to="`/`"
+          class="button cursor-pointer flex justify-center items-center bg-green w-16 rounded-lg shadow-lg"
+        >
+          Home
+        </NuxtLink>
+      </div>
+    </div>
   </nav>
 </template>
 
@@ -53,6 +68,12 @@ export default {
     },
     playbackState() {
       return this.$store.getters.getCurrentPlayback();
+    },
+    activeRoomId() {
+      return this.$store.getters.getActiveRoomId();
+    },
+    activeRoom() {
+      return this.$store.getters.getActiveRoom();
     }
   },
   data() {
