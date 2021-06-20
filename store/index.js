@@ -1,5 +1,5 @@
 import { spotify, refreshToken } from "../plugins/spotify";
-import { db } from "../plugins/firebase";
+import { db, rt } from "../plugins/firebase";
 
 export const state = () => ({
   user: {},
@@ -189,6 +189,9 @@ export const actions = {
     if (!state.selectedDevice && playback.device) {
       commit("SET_SELECTED_DEVICE", playback.device);
     }
+    if (state.myRoom) {
+      dispatch("updateMyRoom", playback);
+    }
     commit("SET_PLAYBACKSTATE", playback);
   },
   setCurrentPlaylist: ({ commit, state }, playlist) => {
@@ -211,6 +214,12 @@ export const actions = {
   selectDevice: async ({ commit }, device) => {
     spotify.transferMyPlayback([device.id]).then(_ => {
       commit("SET_SELECTED_DEVICE", device);
+    });
+  },
+  updateMyRoom: async ({ state }, playback) => {
+    rt.ref(`room/${state.myRoom}/playback`).set({
+      progress_ms: playback.progress_ms,
+      item: playback.item
     });
   }
 };
