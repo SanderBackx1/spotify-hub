@@ -3,7 +3,7 @@
     class="card-content overflow-scroll overflow-x-hidden max-h-128 divide-y divide-blackLight"
   >
     <div v-if="tracks && !$fetchState.pending">
-      <HostTrack
+      <HostPlaylistItem
         class="song w-full flex justify-start items-center py-2 "
         :class="
           track && playbackState.item && track.uri == playbackState.item.uri
