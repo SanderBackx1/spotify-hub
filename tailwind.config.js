@@ -21,7 +21,7 @@ module.exports = {
       black: colors.black,
       gray: colors.gray,
       blackLight: { DEFAULT: `#333333` },
-      blue: colors.lightBlue,
+      blue: colors.sky,
       red: colors.rose,
       pink: colors.fuchsia,
       green: { DEFAULT: `#1DB954` },
