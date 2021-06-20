@@ -16,6 +16,9 @@
         :uri="selectedPlaylist"
         :key="selectedPlaylist"
       />
+      <div v-else class="h-96 flex justify-center items-center">
+        <Spinner :color="'white'" />
+      </div>
     </div>
   </div>
 </template>

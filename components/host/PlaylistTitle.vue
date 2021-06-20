@@ -1,7 +1,12 @@
 <template>
-  <h3 class="text-4xl font-bold">
-    {{ name || "Playlist name" }}
-  </h3>
+  <div>
+    <h3 class="text-4xl font-bold" v-if="!$fetchState.pending">
+      {{ name || "Playlist name" }}
+    </h3>
+    <h3 v-else>
+      <Spinner :color="'white'" />
+    </h3>
+  </div>
 </template>
 
 <script>

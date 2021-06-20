@@ -1,7 +1,5 @@
 <template>
-  <div
-    class="playlists card-content overflow-scroll overflow-x-hidden max-h-96 "
-  >
+  <div class="playlists card-content overflow-scroll overflow-x-hidden h-96 ">
     <div v-if="!$fetchState.pending" class="divide-y divide-blackLight">
       <HostPlaylistItem
         v-for="playlist in playlists"
@@ -9,6 +7,9 @@
         :playlist="playlist"
       >
       </HostPlaylistItem>
+    </div>
+    <div v-else class="flex justify-center items-center w-full h-full">
+      <Spinner :color="'white'" />
     </div>
   </div>
 </template>

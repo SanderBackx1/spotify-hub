@@ -1,5 +1,5 @@
 <template>
-  <div class="card-content overflow-scroll overflow-x-hidden max-h-96 ">
+  <div class="card-content overflow-scroll overflow-x-hidden h-96 ">
     <div
       v-if="tracks && !$fetchState.pending"
       class="divide-y divide-blackLight"
@@ -15,6 +15,9 @@
         :key="track.id"
         :track="track"
       />
+    </div>
+    <div v-else class="flex justify-center items-center w-full h-full">
+      <Spinner :color="'white'" />
     </div>
   </div>
 </template>
