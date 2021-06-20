@@ -5,12 +5,6 @@
       class="divide-y divide-blackLight"
     >
       <HostTrackListItem
-        class="song w-full flex justify-start items-center py-2 "
-        :class="
-          track && playbackState.item && track.uri == playbackState.item.uri
-            ? 'bg-blackLight'
-            : ''
-        "
         v-for="track in tracks"
         :key="track.id"
         :track="track"
@@ -31,11 +25,7 @@ export default {
       tracks: undefined
     };
   },
-  computed: {
-    playbackState() {
-      return this.$store.getters.getCurrentPlayback();
-    }
-  },
+
   props: ["uri"],
   async fetch() {
     const uri = this.$props.uri;

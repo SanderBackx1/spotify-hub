@@ -1,5 +1,12 @@
 <template>
-  <div>
+  <div
+    class="song w-full flex justify-start items-center py-2 pl-4  "
+    :class="
+      track && playbackState.item && track.uri == playbackState.item.uri
+        ? 'bg-blackLight rounded-md'
+        : ''
+    "
+  >
     <img
       class="rounded-lg mr-4 w-10 h-10"
       :src="track.album.images[2].url"
@@ -39,6 +46,11 @@ export default {
       spotify.play({
         uris: [uri]
       });
+    }
+  },
+  computed: {
+    playbackState() {
+      return this.$store.getters.getCurrentPlayback();
     }
   }
 };

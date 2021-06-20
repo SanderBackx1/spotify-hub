@@ -1,7 +1,7 @@
 <template>
   <div
-    class="py-4 cursor-pointer w-full flex justify-start items-center py-2 "
-    :class="playlist.uri == selectedPlaylist ? 'bg-blackLight' : ''"
+    class="cursor-pointer w-full flex justify-start items-center py-2 pl-4 "
+    :class="playlist.uri == selectedPlaylist ? 'bg-blackLight rounded-md' : ''"
     @click="() => selectPlaylist(playlist.uri)"
   >
     <img class="rounded-lg mr-4 w-10 h-10" :src="getImage(playlist)" alt="" />
