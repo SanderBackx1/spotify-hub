@@ -12,7 +12,9 @@ export const state = () => ({
   initialLoadingDone: false,
   currentPlayback: {},
   currentPlaylist: "",
-  selectedPlaylist: ""
+  selectedPlaylist: "",
+  devices: [],
+  selectedDevice: undefined
 });
 export const getters = {
   getUser: state => _ => {
@@ -45,6 +47,12 @@ export const getters = {
   },
   getSelectedPlaylist: state => _ => {
     return state.selectedPlaylist;
+  },
+  getDevices: state => _ => {
+    return state.devices;
+  },
+  getSelectedDevice: state => _ => {
+    return state.selectedDevice;
   }
 };
 export const actions = {
@@ -150,6 +158,7 @@ export const actions = {
   initStartup: async ({ dispatch }, context) => {
     dispatch("userInit", context).finally(_ => {
       dispatch("roomsInit");
+      dispatch("fetchAndSetDevices");
     });
   },
   setMyRoom: async ({ commit, state }, roomId) => {
@@ -173,9 +182,12 @@ export const actions = {
     const docRef = await collectionRef.add(newRoom);
     dispatch("setMyRoom", docRef.id);
   },
-  setCurrentPlayBackState: async ({ commit, dispatch }, playback) => {
+  setCurrentPlayBackState: async ({ commit, dispatch, state }, playback) => {
     if (playback.context && playback.context.uri) {
       dispatch("setCurrentPlaylist", playback.context.uri);
+    }
+    if (!state.selectedDevice && playback.device) {
+      commit("SET_SELECTED_DEVICE", playback.device);
     }
     commit("SET_PLAYBACKSTATE", playback);
   },
@@ -191,6 +203,15 @@ export const actions = {
     if (playlist !== state.selectedPlaylist) {
       commit("SET_SELECTED_PLAYLIST", playlist);
     }
+  },
+  fetchAndSetDevices: async ({ commit }) => {
+    const data = await spotify.getMyDevices();
+    commit("SET_DEVICES", data?.devices);
+  },
+  selectDevice: async ({ commit }, device) => {
+    spotify.transferMyPlayback([device.id]).then(_ => {
+      commit("SET_SELECTED_DEVICE", device);
+    });
   }
 };
 export const mutations = {
@@ -224,5 +245,11 @@ export const mutations = {
   },
   SET_SELECTED_PLAYLIST: (state, playlist) => {
     state.selectedPlaylist = playlist;
+  },
+  SET_DEVICES: (state, devices) => {
+    state.devices = [...devices];
+  },
+  SET_SELECTED_DEVICE: (state, device) => {
+    state.selectedDevice = device;
   }
 };

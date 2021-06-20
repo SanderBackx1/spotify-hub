@@ -4,28 +4,31 @@
       <div
         v-if="menuActive"
         :class="menuActive ? 'opacity-100' : 'opacity-0'"
-        class="rounded-md bg-green p-2 transition w-32 divide-y divide-white"
+        class="rounded-md bg-green p-2 transition w-48 divide-y divide-white"
       >
-        <a
-          v-for="i in 4"
-          :key="i"
+        <div
+          v-for="device in devices"
+          :key="device.id"
           href="#"
-          class="text-white  
-          block px-4 py-2 text-sm"
-          >Setting {{ i }}</a
+          class="text-white cursor-pointer 
+           px-4 py-2 text-sm truncate"
+          @click="() => selectDevice(device)"
         >
+          {{ device.name }}
+        </div>
       </div>
 
       <input class="volumeSlider" type="range" min="0" max="100" />
 
       <button
-        class="bg-green w-32 px-8 py-2 rounded-full text-white text-lg font-bold cursor-pointer"
+        class="bg-green w-32 px-8 py-2 rounded-full text-white text-lg font-bold cursor-pointer truncate"
         id="menu-button"
         aria-expanded="true"
         aria-haspopup="true"
         @click="menuActive = !menuActive"
       >
-        Device
+        <span v-if="selectedDevice">{{ selectedDevice.name }}</span>
+        <span v-else>Device</span>
       </button>
     </div>
   </div>
@@ -37,6 +40,20 @@ export default {
     return {
       menuActive: false
     };
+  },
+  computed: {
+    devices() {
+      return this.$store.getters.getDevices();
+    },
+    selectedDevice() {
+      return this.$store.getters.getSelectedDevice();
+    }
+  },
+  methods: {
+    selectDevice(device) {
+      this.$store.dispatch("selectDevice", device);
+      this.menuActive = false;
+    }
   }
 };
 </script>
