@@ -1,8 +1,9 @@
 <template>
-  <div
-    class="card-content overflow-scroll overflow-x-hidden max-h-128 divide-y divide-blackLight"
-  >
-    <div v-if="tracks && !$fetchState.pending">
+  <div class="card-content overflow-scroll overflow-x-hidden max-h-96 ">
+    <div
+      v-if="tracks && !$fetchState.pending"
+      class="divide-y divide-blackLight"
+    >
       <HostPlaylistItem
         class="song w-full flex justify-start items-center py-2 "
         :class="
@@ -37,7 +38,17 @@ export default {
     const uri = this.$props.uri;
     const parts = uri.split(":");
     const id = parts[parts.length - 1];
-    const playlistTracks = await spotify.getPlaylistTracks(id);
+    let playlistTracks = await spotify.getPlaylistTracks(id);
+    if ((playlistTracks.length = 100)) {
+      let second = [];
+      do {
+        second = [];
+        second = await spotify.getPlaylistTracks(id, {
+          offset: 100
+        });
+        playlistTracks.items = [...playlistTracks.items, ...second.items];
+      } while (second.length == 100);
+    }
     this.tracks = [
       ...playlistTracks.items
         .map(item => item.track)
