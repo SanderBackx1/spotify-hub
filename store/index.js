@@ -11,7 +11,8 @@ export const state = () => ({
   myRoom: "",
   initialLoadingDone: false,
   currentPlayback: {},
-  currentPlaylist: ""
+  currentPlaylist: "",
+  selectedPlaylist: ""
 });
 export const getters = {
   getUser: state => _ => {
@@ -41,6 +42,9 @@ export const getters = {
   },
   getCurrentPlaylist: state => _ => {
     return state.currentPlaylist;
+  },
+  getSelectedPlaylist: state => _ => {
+    return state.selectedPlaylist;
   }
 };
 export const actions = {
@@ -177,8 +181,15 @@ export const actions = {
   },
   setCurrentPlaylist: ({ commit, state }, playlist) => {
     if (playlist !== state.currentPlaylist) {
-      console.log("update playlist");
       commit("SET_CURRENT_PLAYLIST", playlist);
+    }
+    if (!state.selectedPlaylist) {
+      commit("SET_SELECTED_PLAYLIST", playlist);
+    }
+  },
+  setSelectedPlaylist: ({ commit, state }, playlist) => {
+    if (playlist !== state.selectedPlaylist) {
+      commit("SET_SELECTED_PLAYLIST", playlist);
     }
   }
 };
@@ -210,5 +221,8 @@ export const mutations = {
   },
   SET_CURRENT_PLAYLIST: (state, playlist) => {
     state.currentPlaylist = playlist;
+  },
+  SET_SELECTED_PLAYLIST: (state, playlist) => {
+    state.selectedPlaylist = playlist;
   }
 };

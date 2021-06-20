@@ -2,10 +2,13 @@
   <div
     class="playlists card-content overflow-scroll overflow-x-hidden max-h-96 "
   >
-    <div v-if="!$fetchState.pending">
-      <div v-for="playlist in playlists" :key="playlist.id">
-        <p>{{ playlist.name }}</p>
-      </div>
+    <div v-if="!$fetchState.pending" class="divide-y divide-blackLight">
+      <HostPlaylistItem
+        v-for="playlist in playlists"
+        :key="playlist.id"
+        :playlist="playlist"
+      >
+      </HostPlaylistItem>
     </div>
   </div>
 </template>
