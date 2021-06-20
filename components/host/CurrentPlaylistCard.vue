@@ -17,7 +17,6 @@
         :key="currentPlaylist"
       />
     </div>
-    <p></p>
   </div>
 </template>
 
