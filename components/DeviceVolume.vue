@@ -18,8 +18,21 @@
         </div>
       </div>
 
-      <input class="volumeSlider" type="range" min="0" max="100" />
-
+      <input
+        class="volumeSlider"
+        type="range"
+        min="0"
+        max="100"
+        v-if="playbackState.device"
+        :value="playbackState ? playbackState.device.volume_percent : 50"
+        @change="setVolume"
+        :style="{
+          backgroundImage: `linear-gradient(90deg, #1db954 ${
+            playbackState ? playbackState.device.volume_percent : 50
+          }% ,#333333
+         ${playbackState ? playbackState.device.volume_percent : 50}% )`
+        }"
+      />
       <button
         class="bg-green w-32 px-8 py-2 rounded-full text-white text-lg font-bold cursor-pointer truncate"
         id="menu-button"
@@ -35,6 +48,8 @@
 </template>
 
 <script>
+import { spotify } from "@/plugins/spotify";
+
 export default {
   data() {
     return {
@@ -47,12 +62,18 @@ export default {
     },
     selectedDevice() {
       return this.$store.getters.getSelectedDevice();
+    },
+    playbackState() {
+      return this.$store.getters.getCurrentPlayback();
     }
   },
   methods: {
     selectDevice(device) {
       this.$store.dispatch("selectDevice", device);
       this.menuActive = false;
+    },
+    setVolume(e) {
+      spotify.setVolume(e.target.value);
     }
   }
 };
