@@ -1,6 +1,12 @@
 <template>
-  <div class="playlists">
-    <h3>All playlists</h3>
+  <div
+    class="playlists card-content overflow-scroll overflow-x-hidden max-h-96 "
+  >
+    <div v-if="!$fetchState.pending">
+      <div v-for="playlist in playlists" :key="playlist.id">
+        <p>{{ playlist.name }}</p>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -27,6 +33,8 @@ export default {
         playlists.items = [...playlists.items, ...second.items];
       } while (second.length == 20);
     }
+
+    this.playlists = [...playlists.items];
   }
 };
 </script>
