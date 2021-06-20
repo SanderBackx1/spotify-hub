@@ -1,6 +1,6 @@
 <template>
   <nav class="nav flex justify-start w-screen bg-black shadow-lg">
-    <div class="user flex justify-start w-1/3">
+    <div class="user flex justify-start">
       <img
         class="min-w-1/2 max-h-20 max-w-20"
         v-if="user.images"
@@ -15,7 +15,7 @@
       </h4>
     </div>
     <div
-      class="text-white w-1/3  flex justify-center items-center"
+      class="text-white flex justify-center items-center"
       v-if="playbackState.item"
     >
       <div class="image ">

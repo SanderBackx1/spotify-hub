@@ -1,7 +1,7 @@
 <template>
   <div class="wrapper flex justify-center items-center relative">
     <div class="main-wrapper w-full mr-80">
-      <div class="top-wrapper bg-green mt-8">
+      <div class="top-wrapper mt-8">
         <div class="title-wrapper flex justify-center items-center">
           <h3 class="text-4xl font-bold text-white">{{ name }}</h3>
         </div>
