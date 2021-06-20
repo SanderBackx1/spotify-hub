@@ -2,7 +2,7 @@
   <div class="card-content overflow-scroll overflow-x-hidden h-96 ">
     <div
       v-if="tracks && !$fetchState.pending"
-      class="divide-y divide-blackLight"
+      class="divide-y divide-blackLight mr-4"
     >
       <HostTrackListItem
         v-for="track in tracks"

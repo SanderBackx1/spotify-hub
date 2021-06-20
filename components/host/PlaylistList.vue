@@ -1,6 +1,6 @@
 <template>
   <div class="playlists card-content overflow-scroll overflow-x-hidden h-96 ">
-    <div v-if="!$fetchState.pending" class="divide-y divide-blackLight">
+    <div v-if="!$fetchState.pending" class="divide-y divide-blackLight  mr-4">
       <HostPlaylistItem
         v-for="playlist in playlists"
         :key="playlist.id"
