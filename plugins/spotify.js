@@ -87,8 +87,16 @@ export const refreshToken = async refresh_token => {
 };
 
 export const fetchAndUpdatePlaybackState = async context => {
-  const res = await spotify.getMyCurrentPlaybackState();
-  if (res) {
-    context.$store.dispatch("setCurrentPlayBackState", res);
+  try {
+    const res = await spotify.getMyCurrentPlaybackState();
+    if (res) {
+      context.$store.dispatch("setCurrentPlayBackState", res);
+    }
+  } catch (err) {
+    console.log(err);
+    if (err.status == 403) {
+      const refresh = context.$cookies.get("spotify_refresh");
+      refreshToken(refresh);
+    }
   }
 };
