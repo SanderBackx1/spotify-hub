@@ -14,7 +14,9 @@ const scopes = [
   "user-top-read",
   "user-modify-playback-state",
   "user-library-modify",
-  "user-library-read"
+  "user-library-read",
+  "playlist-read-private",
+  "playlist-read-collaborative"
 ];
 
 export const loginUrl = `${authEndpoint}?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scopes.join(
