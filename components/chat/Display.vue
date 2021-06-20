@@ -1,5 +1,5 @@
 <template>
-  <div class="wrapper h-full flex flex-col bg-blackLight text-white">
+  <div class="wrapper h-full flex flex-col bg-blackLight text-white shadow-lg">
     <div class="top-wrapper h-20 flex items-center justify-center">
       <h3>Chatroom</h3>
     </div>

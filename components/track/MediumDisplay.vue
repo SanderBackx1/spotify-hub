@@ -43,7 +43,6 @@
 
 <script>
 export default {
-  props: ["track"],
   computed: {
     playbackState() {
       return this.$store.getters.getCurrentPlayback();

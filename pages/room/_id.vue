@@ -5,7 +5,7 @@
         <HostDisplay :name="room.name" />
       </div>
       <div v-else>
-        not host :(
+        <ListenerDisplay :name="room.name" />
       </div>
     </div>
   </div>
