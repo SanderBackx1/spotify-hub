@@ -4,7 +4,7 @@
       v-if="tracks && !$fetchState.pending"
       class="divide-y divide-blackLight"
     >
-      <HostPlaylistItem
+      <HostTrackListItem
         class="song w-full flex justify-start items-center py-2 "
         :class="
           track && playbackState.item && track.uri == playbackState.item.uri
