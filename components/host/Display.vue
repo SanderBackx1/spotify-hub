@@ -7,13 +7,13 @@
         </div>
       </div>
       <div
-        class="main-section flex xl:justify-between lg:justify-center items-center my-8 mx-16 flex-wrap"
+        class="main-section flex xl:justify-evenly lg:justify-center items-center my-8 mx-16 flex-wrap"
       >
         <div class="playlistsongs xl:w-2/4 lg:w-3/4">
           <HostCurrentPlaylistCard />
         </div>
-        <div class="playlists bg-gray-400 xl:w-1/4 lg:w-3/4">
-          playlists
+        <div class="playlists  xl:w-1/4 lg:w-3/4">
+          <HostAllPlaylistsCard />
         </div>
       </div>
     </div>
