@@ -41,12 +41,15 @@ export default {
     let playlistTracks = await spotify.getPlaylistTracks(id);
     if ((playlistTracks.length = 100)) {
       let second = [];
+      let count = 1;
       do {
         second = [];
+
         second = await spotify.getPlaylistTracks(id, {
-          offset: 100
+          offset: 100 * count
         });
         playlistTracks.items = [...playlistTracks.items, ...second.items];
+        count++;
       } while (second.length == 100);
     }
     this.tracks = [
