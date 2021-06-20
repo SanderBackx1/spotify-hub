@@ -11,58 +11,17 @@
           </button>
         </div>
       </div>
-      <div
-        class="card-content overflow-scroll overflow-x-hidden max-h-128 divide-y divide-blackLight"
-      >
-        <div v-if="tracks.length > 0">
-          <div
-            class="song w-full flex justify-start items-center py-2 "
-            :class="
-              item.track &&
-              playbackState.item &&
-              item.track.uri == playbackState.item.uri
-                ? 'bg-blackLight'
-                : ''
-            "
-            v-for="item in tracks"
-            :key="item.track.id"
-          >
-            <img
-              class="rounded-lg mr-4"
-              :src="item.track.album.images[2].url"
-              alt=""
-            />
-            <div class="artist-title">
-              <p class="mr-4 text-sm font-thin">
-                {{ item.track.artists.map(artist => artist.name).join(", ") }}
-              </p>
-              <p class="mr-4 text-mg">{{ item.track.name }}</p>
-            </div>
-            <div class="buttons ml-auto flex justify-center items-center">
-              <button
-                class="bg-green mr-2 px-2  rounded-full shadow-2xl"
-                @click="
-                  () => {
-                    play(item.track.uri);
-                  }
-                "
-              >
-                >
-              </button>
-              <button class="bg-green px-2  rounded-full shadow-2xl">
-                Q
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
+      <HostPlaylist
+        v-if="currentPlaylist"
+        :uri="currentPlaylist"
+        :key="currentPlaylist"
+      />
     </div>
     <p></p>
   </div>
 </template>
 
 <script>
-import { spotify } from "@/plugins/spotify";
 export default {
   data() {
     return {
@@ -72,31 +31,9 @@ export default {
   computed: {
     playbackState() {
       return this.$store.getters.getCurrentPlayback();
-    }
-  },
-  methods: {
-    play(uri) {
-      const allUris = this.tracks
-        .map(item => item.track.uri)
-        .filter(trackUri => trackUri != uri);
-      const [one, two] = allUris;
-      spotify.play({
-        uris: [uri, two, one]
-      });
-    }
-  },
-
-  async fetch() {
-    let state = this.playbackState;
-    if (!state.context) {
-      state = await spotify.getMyCurrentPlaybackState();
-    }
-    const { context } = state;
-    if (context) {
-      const parts = context.uri.split(":");
-      const id = parts[parts.length - 1];
-      const playlistTracks = await spotify.getPlaylistTracks(id);
-      this.tracks = [...playlistTracks.items];
+    },
+    currentPlaylist() {
+      return this.$store.getters.getCurrentPlaylist();
     }
   }
 };

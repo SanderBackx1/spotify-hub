@@ -10,7 +10,8 @@ export const state = () => ({
   invitedRooms: [],
   myRoom: "",
   initialLoadingDone: false,
-  currentPlayback: {}
+  currentPlayback: {},
+  currentPlaylist: ""
 });
 export const getters = {
   getUser: state => _ => {
@@ -37,6 +38,9 @@ export const getters = {
   },
   getCurrentPlayback: state => _ => {
     return state.currentPlayback;
+  },
+  getCurrentPlaylist: state => _ => {
+    return state.currentPlaylist;
   }
 };
 export const actions = {
@@ -63,11 +67,9 @@ export const actions = {
       commit("SET_USER", user);
     } catch (err) {
       //Token expired
-      console.log(":(");
       commit("SET_TOKEN", "");
     }
   },
-
   userInit: async ({ commit, dispatch }, context) => {
     const refresh_token = context.$cookies.get("spotify_refresh");
     // const access_token = null;
@@ -167,8 +169,17 @@ export const actions = {
     const docRef = await collectionRef.add(newRoom);
     dispatch("setMyRoom", docRef.id);
   },
-  setCurrentPlayBackState: async ({ commit }, playback) => {
+  setCurrentPlayBackState: async ({ commit, dispatch }, playback) => {
+    if (playback.context && playback.context.uri) {
+      dispatch("setCurrentPlaylist", playback.context.uri);
+    }
     commit("SET_PLAYBACKSTATE", playback);
+  },
+  setCurrentPlaylist: ({ commit, state }, playlist) => {
+    if (playlist !== state.currentPlaylist) {
+      console.log("update playlist");
+      commit("SET_CURRENT_PLAYLIST", playlist);
+    }
   }
 };
 export const mutations = {
@@ -196,5 +207,8 @@ export const mutations = {
   },
   SET_PLAYBACKSTATE: (state, playback) => {
     state.currentPlayback = playback;
+  },
+  SET_CURRENT_PLAYLIST: (state, playlist) => {
+    state.currentPlaylist = playlist;
   }
 };
