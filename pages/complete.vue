@@ -8,6 +8,7 @@ import { setToken } from "../plugins/spotify";
 export default {
   created() {
     setToken(this);
+    this.$router.push("/");
   }
 };
 </script>
