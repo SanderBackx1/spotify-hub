@@ -30,8 +30,17 @@
 </template>
 
 <script>
+import { spotify } from "@/plugins/spotify";
+
 export default {
-  props: ["track"]
+  props: ["track"],
+  methods: {
+    play(uri) {
+      spotify.play({
+        uris: [uri]
+      });
+    }
+  }
 };
 </script>
 

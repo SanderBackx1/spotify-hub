@@ -60,13 +60,6 @@ export default {
         .map(item => item.track)
         .filter(track => !track.is_local)
     ];
-  },
-  methods: {
-    play(uri) {
-      spotify.play({
-        uris: [uri]
-      });
-    }
   }
 };
 </script>
