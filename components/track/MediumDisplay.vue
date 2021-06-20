@@ -1,25 +1,29 @@
 <template>
-  <div class="w-72">
+  <div class="">
     <div class="wrapper" v-if="playbackState.item">
-      <div class="track-display w-full flex flex-row items-center h-36">
-        <div class="image h-full ">
+      <div class="track-display w-full h-36 flex flex-row items-center ">
+        <div class="image h-36 w-36 ">
           <img
-            class="h-full rounded-lg shadow-2xl"
+            class="  rounded-lg shadow-2xl"
             :src="playbackState.item.album.images[1].url"
             alt=""
           />
         </div>
         <div
-          class="track h-full ml-4 flex flex-col justify-evenly items-center text-white"
+          class="track h-full  ml-4 flex flex-col justify-evenly items-center text-white"
         >
-          <div class="artist-title">
-            <h3 class="text-xl font-thin">
+          <div class="artist-title h-36">
+            <h3 class="text-xl font-thin w-36 h-1/2 overflow-ellipsis ">
               {{
-                playbackState.item.artists.map(artist => artist.name).join(", ")
+                truncate(
+                  playbackState.item.artists
+                    .map(artist => artist.name)
+                    .join(", ")
+                )
               }}
             </h3>
-            <h3 class="text-xl mt-4 font-bold">
-              {{ playbackState.item.name }}
+            <h3 class="text-xl mt-4 font-bold overflow-ellipsis w-36 h-1/2">
+              {{ truncate(playbackState.item.name) }}
             </h3>
           </div>
         </div>
@@ -43,6 +47,14 @@ export default {
   computed: {
     playbackState() {
       return this.$store.getters.getCurrentPlayback();
+    }
+  },
+  methods: {
+    truncate(str) {
+      if (str.length > 25) {
+        return str.substr(0, 25) + "...";
+      }
+      return str;
     }
   }
 };
